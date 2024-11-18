@@ -1,4 +1,4 @@
-package com.example.librarymanagementsystem.ui
+package com.example.librarymanagementsystem.ui.home
 
 import androidx.compose.runtime.Composable
 

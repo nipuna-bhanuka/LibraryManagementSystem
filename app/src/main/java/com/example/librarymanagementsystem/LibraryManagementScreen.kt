@@ -2,26 +2,46 @@ package com.example.librarymanagementsystem
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalOf
-import com.example.librarymanagementsystem.ui.BookCategoryScreen
+import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.example.librarymanagementsystem.ui.book.AddBook
+import com.example.librarymanagementsystem.ui.book.BookListScreen
+import com.example.librarymanagementsystem.ui.category.AddCategory
+import com.example.librarymanagementsystem.ui.category.BookCategoryScreen
+import com.example.librarymanagementsystem.ui.navigation.LibraryAppNavigation
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LibraryManagementAppBar(){
+fun LibraryManagementAppBar(title : String){
     Column(
         modifier = Modifier
     ) {
-        Row() {
-            Text(text = "Back")
-        }
+        TopAppBar(
+            title = {
+                Text(title)
+            },
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = Color.Blue,
+                titleContentColor = Color.White,
+                navigationIconContentColor = Color.White,
+                actionIconContentColor = Color.White
+            )
+        )
     }
 }
 
 @Composable
-fun LibraryManagementApp(){
-    LibraryManagementAppBar()
-    BookCategoryScreen()
+fun LibraryManagementApp(navController: NavHostController = rememberNavController()){
+    LibraryAppNavigation(navController = navController)
+    //BookCategoryScreen()
+    //BookListScreen()
+    //AddCategory()
+    //AddBook()
 }
