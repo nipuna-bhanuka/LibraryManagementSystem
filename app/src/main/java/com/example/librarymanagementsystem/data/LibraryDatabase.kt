@@ -13,7 +13,7 @@ import com.example.librarymanagementsystem.data.Category.CategoryDao
     entities = [
         Category::class ,
         Book::class],
-    version = 1,
+    version = 2,
     exportSchema = false)
 abstract class LibraryDatabase : RoomDatabase() {
 

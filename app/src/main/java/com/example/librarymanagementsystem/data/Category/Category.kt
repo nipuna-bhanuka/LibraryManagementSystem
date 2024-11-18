@@ -12,8 +12,6 @@ data class Category(
     val name : String,
     @ColumnInfo(name = "description")
     val description : String,
-    @ColumnInfo(name = "is_Available")
-    val isAvailable : Boolean,
     @ColumnInfo(name = "is_Active")
     val isActive : Boolean = true
 )

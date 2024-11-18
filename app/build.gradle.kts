@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("com.google.devtools.ksp") version "2.0.21-1.0.25"
+    id("com.google.devtools.ksp") version "2.0.21-1.0.27"
 }
 
 android {
@@ -60,9 +60,11 @@ dependencies {
 
 
     implementation(libs.androidx.room.runtime)
-    ksp("com.google.dagger:dagger-compiler:2.51.1")
+    ksp("androidx.room:room-compiler:2.5.0")
     implementation(libs.androidx.room.ktx)
 
     val nav_version = "2.8.4"
     implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
 }

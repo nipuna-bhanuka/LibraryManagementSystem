@@ -14,7 +14,7 @@ import com.example.librarymanagementsystem.data.Category.Category
 )
 data class Book(
     @PrimaryKey(autoGenerate = true)
-    val id:Int = 0,
+    val id:Int = 1,
     @ColumnInfo(name = "title")
     val title : String,
     @ColumnInfo(name = "author")
@@ -22,7 +22,7 @@ data class Book(
     @ColumnInfo(name = "description")
     val description : String,
     @ColumnInfo(name = "category_Id")
-    val categoryId : Int,
+    val categoryId : Int?,
     @ColumnInfo(name = "is_Available")
     val isAvailable : Boolean,
     @ColumnInfo(name = "is_Active")

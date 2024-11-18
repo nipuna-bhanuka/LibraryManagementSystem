@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.librarymanagementsystem.ui.book.AddBook
 import com.example.librarymanagementsystem.ui.book.BookListScreen
-import com.example.librarymanagementsystem.ui.category.AddCategory
+import com.example.librarymanagementsystem.ui.category.AddCategoryScreen
 import com.example.librarymanagementsystem.ui.category.BookCategoryScreen
 
 @Composable
@@ -26,7 +26,7 @@ fun LibraryAppNavigation(
             BookCategoryScreen(navController)
         }
         composable(route = Routes.addcategory){
-            AddCategory()
+            AddCategoryScreen()
         }
         composable(route = Routes.booklist){
             BookListScreen(navController)

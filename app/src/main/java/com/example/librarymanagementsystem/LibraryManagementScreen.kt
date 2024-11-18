@@ -11,10 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.librarymanagementsystem.ui.book.AddBook
-import com.example.librarymanagementsystem.ui.book.BookListScreen
-import com.example.librarymanagementsystem.ui.category.AddCategory
-import com.example.librarymanagementsystem.ui.category.BookCategoryScreen
 import com.example.librarymanagementsystem.ui.navigation.LibraryAppNavigation
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,8 +36,4 @@ fun LibraryManagementAppBar(title : String){
 @Composable
 fun LibraryManagementApp(navController: NavHostController = rememberNavController()){
     LibraryAppNavigation(navController = navController)
-    //BookCategoryScreen()
-    //BookListScreen()
-    //AddCategory()
-    //AddBook()
 }

@@ -1,132 +1,132 @@
 package com.example.librarymanagementsystem.ui.book
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.librarymanagementsystem.LibraryManagementAppBar
+import com.example.librarymanagementsystem.data.Category.Category
+import com.example.librarymanagementsystem.ui.AppViewModelProvider
+import com.example.librarymanagementsystem.ui.category.BookCategoryViewModel
+import com.example.librarymanagementsystem.ui.category.CategoryUiState
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview
 @Composable
-fun AddBook(){
+fun AddBook(
+    viewModel: AddBookViewModel = viewModel(factory = AppViewModelProvider.Factory),
+){
     Column(modifier = Modifier) {
-        LibraryManagementAppBar("Add Book")
 
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+        val coroutineScope = rememberCoroutineScope()
+
+        Scaffold(
+            topBar = { LibraryManagementAppBar("Add Book") }
         ){
-            var bookName by remember{
-                mutableStateOf("")
-            }
-            var bookAuthor by remember{
-                mutableStateOf("")
-            }
-            var bookDescription by remember{
-                mutableStateOf("")
-            }
-            var bookCategory by remember{
-                mutableStateOf("")
-            }
-            var isDropdownExpanded by remember { mutableStateOf(false) }
-
-            val categories = listOf("Fiction", "Non-Fiction", "Science Fiction", "Biography", "Fantasy")
-
-
-
-            TextField(
-                value = bookName,
-                onValueChange = { bookName = it},
-                label = {
-                    Text("Title")
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.padding(vertical = 16.dp))
-
-            TextField(
-                value = bookAuthor,
-                onValueChange = { bookAuthor = it},
-                label = {
-                    Text("Author")
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.padding(vertical = 16.dp))
-
-            ExposedDropdownMenuBox(
-                expanded = isDropdownExpanded,
-                onExpandedChange = { isDropdownExpanded = !isDropdownExpanded }
-            ) {
-                TextField(
-                    value = bookCategory,
-                    onValueChange = {},
-                    readOnly = true,
-                    label = { Text("Category") },
-                    trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = isDropdownExpanded)
-                    },
-                    modifier = Modifier
-                        .menuAnchor() // Needed for proper positioning of the dropdown
-                        .fillMaxWidth()
-                )
-
-                ExposedDropdownMenu(
-                    expanded = isDropdownExpanded,
-                    onDismissRequest = { isDropdownExpanded = false }
-                ) {
-                    categories.forEach { category ->
-                        DropdownMenuItem(
-                            text = { Text(category) },
-                            onClick = {
-                                bookCategory = category
-                                isDropdownExpanded = false
-                            }
-                        )
+            AddBookBody(
+                bookUiState = viewModel.bookUiState,
+                onBookValueChange = viewModel::updateUiState,
+                onSaveClick = {
+                    coroutineScope.launch {
+                        viewModel.saveBook()
                     }
                 }
-            }
-
-            Spacer(modifier = Modifier.padding(vertical = 16.dp))
-
-            TextField(
-                value = bookDescription,
-                onValueChange = { bookDescription = it},
-                label = {
-                    Text("Description")
-                },
-                modifier = Modifier.fillMaxWidth()
             )
-
-            Spacer(modifier = Modifier.padding(vertical = 16.dp))
-
-            Button(
-                onClick = { }
-            ) {
-                Text("Add")
-            }
         }
+    }
+
+}
+
+@Composable
+fun AddBookBody(
+    bookUiState: BookUiState,
+    onBookValueChange: (BookDetails) -> Unit,
+    onSaveClick: () -> Unit,
+){
+    Column {
+
+        BookInputForm(
+            bookDetails = bookUiState.bookDetails,
+            onValueChange = onBookValueChange,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Button(
+            onClick = onSaveClick,
+            shape = MaterialTheme.shapes.small,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Save New Book")
+        }
+    }
+}
+
+@Composable
+fun BookInputForm(
+    bookDetails: BookDetails,
+    modifier: Modifier= Modifier,
+    onValueChange: (BookDetails) -> Unit = {},
+    enabled: Boolean = true
+){
+
+    Column(
+        modifier = modifier.padding(top = 96.dp)
+    ) {
+        OutlinedTextField(
+            value = bookDetails.title,
+            onValueChange = { onValueChange(bookDetails.copy(title = it))},
+            label = {
+                Text("Book Title")
+            },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = true
+        )
+
+        Spacer(modifier = Modifier.padding(vertical = 16.dp))
+
+        OutlinedTextField(
+            value = bookDetails.author,
+            onValueChange = { onValueChange(bookDetails.copy(author = it))},
+            label = {
+                Text("Author of the Book")
+            },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled
+        )
+
+        Spacer(modifier = Modifier.padding(vertical = 16.dp))
+
+        OutlinedTextField(
+            value = bookDetails.description,
+            onValueChange = { onValueChange(bookDetails.copy(description = it))},
+            label = {
+                Text("About Book")
+            },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled
+        )
 
     }
 }
+
