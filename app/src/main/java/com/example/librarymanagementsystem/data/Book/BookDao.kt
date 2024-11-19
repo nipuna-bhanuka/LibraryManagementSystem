@@ -18,14 +18,14 @@ interface BookDao{
     suspend fun update(book: Book)
 
     @Delete
-    suspend fun delete(book: Book)
+    suspend fun delete(bookId: Int)
 
     @Query("SELECT * from books WHERE id = :id")
     fun getBook(id: Int): Flow<Book>
 
-    @Query("SELECT * from books ORDER BY title ASC")
+    @Query("SELECT * from books ORDER BY title DESC")
     fun getAllBooks(): Flow<List<Book>>
 
-    @Query("SELECT * from books WHERE category_Id = :cid ORDER BY title ASC")
+    @Query("SELECT * from books WHERE category_Id = :cid ORDER BY title DESC")
     fun getBooksByCategory(cid: Int): Flow<List<Book>>
 }

@@ -3,6 +3,7 @@ package com.example.librarymanagementsystem
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -24,7 +25,7 @@ fun LibraryManagementAppBar(title : String){
                 Text(title)
             },
             colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = Color.Blue,
+                containerColor = Color.Magenta,
                 titleContentColor = Color.White,
                 navigationIconContentColor = Color.White,
                 actionIconContentColor = Color.White

@@ -22,8 +22,9 @@ class AddBookViewModel(
     }
 
     suspend fun saveBook() {
+        println("hiI :"+bookUiState.bookDetails)
         if(validateInput()){
-            booksRepository.insertCategory(bookUiState.bookDetails.toBook())
+            booksRepository.insertBook(bookUiState.bookDetails.toBook())
         }
     }
 
@@ -43,7 +44,7 @@ data class BookDetails(
     val id: Int = 0,
     val title: String = "",
     val author: String = "",
-    val categoryId: Int = 1,
+    val categoryId: Int? = null,
     val description: String = "",
     val isAvailable: Boolean = true,
     val isActive: Boolean = true,

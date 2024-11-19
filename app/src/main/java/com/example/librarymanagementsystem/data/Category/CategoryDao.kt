@@ -22,6 +22,29 @@ interface CategoryDao{
     @Query("SELECT * from categories WHERE id = :id")
     fun getCategory(id: Int): Flow<Category>
 
-    @Query("SELECT * from categories ORDER BY name ASC")
-    fun getAllCategories(): Flow<List<Category>>
+    @Query("""
+        SELECT 
+    c.id AS categoryId,
+    c.name AS categoryName,
+    c.description AS categoryDescription,
+    COALESCE(b.bookCount, 0) AS noOfBooks
+    FROM categories c
+        LEFT JOIN (
+        SELECT 
+            category_Id,
+            COUNT(id) AS bookCount
+        FROM books
+        WHERE is_Active = 1
+    GROUP BY category_Id
+) b ON c.id = b.category_Id
+ORDER BY c.id DESC
+    """)
+    fun getAllCategories(): Flow<List<CategoryWithBookCount>>
 }
+
+data class CategoryWithBookCount(
+    val categoryId: Int,
+    val categoryName: String,
+    val categoryDescription: String,
+    val noOfBooks: Int
+)

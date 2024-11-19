@@ -3,7 +3,7 @@ package com.example.librarymanagementsystem.data.Category
 import kotlinx.coroutines.flow.Flow
 
 interface CategoryRepository{
-    fun getAllCategoriesStream() : Flow<List<Category>>
+    fun getAllCategoriesStream() : Flow<List<CategoryWithBookCount>>
 
     fun getCategoryStream(id : Int) : Flow<Category>
 

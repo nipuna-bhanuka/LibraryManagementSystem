@@ -3,7 +3,7 @@ package com.example.librarymanagementsystem.data.Category
 import kotlinx.coroutines.flow.Flow
 
 class OfflineCategoryRepository(private val categoryDao: CategoryDao) : CategoryRepository {
-    override fun getAllCategoriesStream(): Flow<List<Category>>
+    override fun getAllCategoriesStream(): Flow<List<CategoryWithBookCount>>
         = categoryDao.getAllCategories()
 
     override fun getCategoryStream(id: Int): Flow<Category>

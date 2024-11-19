@@ -7,13 +7,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -54,7 +57,9 @@ fun AddCategoryBody(
     onCategoryValueChange: (CategoryDetails) -> Unit,
     onSaveClick: () -> Unit,
 ){
-    Column {
+    Column(
+        modifier = Modifier.padding(16.dp)
+    ) {
         CategoryInputForm(
             categoryDetails = categoryUiState.categoryDetails,
             onValueChange = onCategoryValueChange,
@@ -62,6 +67,10 @@ fun AddCategoryBody(
         )
         Button(
             onClick = onSaveClick,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Magenta,
+                contentColor = Color.White
+            ),
             shape = MaterialTheme.shapes.small,
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -102,5 +111,7 @@ fun CategoryInputForm(
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled
         )
+
+        Spacer(modifier = Modifier.padding(vertical = 16.dp))
     }
 }

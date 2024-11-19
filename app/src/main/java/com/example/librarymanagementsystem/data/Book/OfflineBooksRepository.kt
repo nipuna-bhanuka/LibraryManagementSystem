@@ -12,13 +12,13 @@ class OfflineBooksRepository(private  val bookDao: BookDao) : BooksRepository{
     override fun getBooksByCategoryStream(cId: Int): Flow<List<Book>>
         = bookDao.getBooksByCategory(cId)
 
-    override suspend fun insertCategory(book: Book)
+    override suspend fun insertBook(book: Book)
         = bookDao.insert(book)
 
-    override suspend fun deleteCategory(book: Book)
-        = bookDao.delete(book)
+    override suspend fun deleteBook(bookId: Int)
+        = bookDao.delete(bookId)
 
-    override suspend fun updateCategory(book: Book)
+    override suspend fun updateBook(book: Book)
         = bookDao.update(book)
 
 }

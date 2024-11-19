@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.librarymanagementsystem.data.Category.Category
 import com.example.librarymanagementsystem.data.Category.CategoryRepository
+import com.example.librarymanagementsystem.data.Category.CategoryWithBookCount
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -27,4 +28,4 @@ class BookCategoryViewModel(categoryRepository: CategoryRepository) : ViewModel(
 
 }
 
-data class ViewCategoryUiState(val categoryList: List<Category> = listOf())
+data class ViewCategoryUiState(val categoryList: List<CategoryWithBookCount> = listOf())

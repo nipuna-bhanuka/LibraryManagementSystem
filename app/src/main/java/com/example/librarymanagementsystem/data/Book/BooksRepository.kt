@@ -9,9 +9,9 @@ interface BooksRepository{
 
     fun getBooksByCategoryStream(cId : Int) : Flow<List<Book>>
 
-    suspend fun insertCategory(book: Book)
+    suspend fun insertBook(book: Book)
 
-    suspend fun deleteCategory(book: Book)
+    suspend fun deleteBook(bookId: Int)
 
-    suspend fun updateCategory(book: Book)
+    suspend fun updateBook(book: Book)
 }
