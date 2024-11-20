@@ -22,14 +22,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -48,6 +53,7 @@ import com.example.librarymanagementsystem.R
 import com.example.librarymanagementsystem.data.Category.CategoryWithBookCount
 import com.example.librarymanagementsystem.ui.AppViewModelProvider
 import com.example.librarymanagementsystem.ui.navigation.Routes
+import kotlinx.coroutines.delay
 
 @Composable
 fun BookCategoryScreen(
@@ -56,6 +62,12 @@ fun BookCategoryScreen(
     viewModel: BookCategoryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ){
     val categoryUiState by viewModel.categoryUiState.collectAsState()
+    var isLoading by remember { mutableStateOf(true) }
+
+    LaunchedEffect(Unit) {
+        delay(1000)
+        isLoading = false
+    }
 
     Scaffold(
         topBar = { LibraryManagementAppBar("Select Category") },
@@ -81,6 +93,7 @@ fun BookCategoryScreen(
     ) {
         innerPadding ->
         CategoryViewBody(
+            isLoading = isLoading,
             categoryList = categoryUiState.categoryList,
             onCategoryClick = { categoryId, categoryName ->
                 navController.navigate(Routes.booklist + "/${categoryId}/${categoryName}")
@@ -93,6 +106,7 @@ fun BookCategoryScreen(
 
 @Composable
 private fun CategoryViewBody(
+    isLoading : Boolean,
     categoryList: List<CategoryWithBookCount>,
     onCategoryClick: (Int, String) -> Unit,
     modifier: Modifier= Modifier,
@@ -102,21 +116,26 @@ private fun CategoryViewBody(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
-        if(categoryList.isEmpty()){
-            Text(
-                text = "No categories available",
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleLarge,
-                modifier = modifier.padding(vertical = 128.dp)
-            )
-        }else {
-            CategoryList(
-                categoryList = categoryList,
-                onCategoryClick = {onCategoryClick(it.categoryId, it.categoryName)},
-                contentPadding = contentPadding,
-                modifier = Modifier.padding(horizontal = 8.dp)
-            )
+        if (isLoading) {
+            CircularProgressIndicator()
+        } else {
+            if(categoryList.isEmpty()){
+                Text(
+                    text = "No categories available",
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = modifier.padding(vertical = 128.dp)
+                )
+            }else {
+                CategoryList(
+                    categoryList = categoryList,
+                    onCategoryClick = {onCategoryClick(it.categoryId, it.categoryName)},
+                    contentPadding = contentPadding,
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                )
+            }
         }
+
     }
 }
 
@@ -169,7 +188,7 @@ private fun CategoryCard(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp),
-                verticalArrangement = Arrangement.Center // Center text vertically
+                verticalArrangement = Arrangement.Center
             ) {
                 Text(
                     text = category.categoryName,
@@ -178,7 +197,7 @@ private fun CategoryCard(
                     fontWeight = FontWeight.Bold
                 )
 
-                Spacer(modifier = Modifier.height(8.dp)) // Add spacing between texts
+                Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
                     text = "No of Books: ${category.noOfBooks}",

@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.librarymanagementsystem.data.Book.Book
 import com.example.librarymanagementsystem.data.Book.BooksRepository
-import com.example.librarymanagementsystem.data.Category.Category
-import com.example.librarymanagementsystem.data.Category.CategoryRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -35,7 +33,7 @@ class BookListViewModel(
             )
 
     companion object {
-        private const val TIMEOUT_MILLIS = 5_000L
+        const val TIMEOUT_MILLIS = 5_000L
     }
 
 }

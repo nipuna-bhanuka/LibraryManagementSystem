@@ -6,4 +6,6 @@ object Routes {
     val bookdetail = "bookDetail"
     val addcategory = "addCategory"
     val addbook = "addBook"
+    val editbook = "editBook"
+    val home = "Home"
 }

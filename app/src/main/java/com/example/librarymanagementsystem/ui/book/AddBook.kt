@@ -1,6 +1,7 @@
 package com.example.librarymanagementsystem.ui.book
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -61,7 +62,6 @@ fun AddBook(
                 bookUiState = viewModel.bookUiState,
                 onBookValueChange = viewModel::updateUiState,
                 onSaveClick = {
-                    println("cid5 $categoryId")
                     coroutineScope.launch {
                         viewModel.saveBook()
                     }
@@ -115,6 +115,10 @@ fun BookInputForm(
     onValueChange: (BookDetails) -> Unit = {},
     enabled: Boolean = true
 ) {
+    LaunchedEffect(true) {
+        Log.e("tag","cID $categoryId")
+        onValueChange(bookDetails.copy(categoryId = categoryId))
+    }
     Column(
         modifier = modifier.padding(top = 96.dp)
     ) {
@@ -139,15 +143,14 @@ fun BookInputForm(
 
         Spacer(modifier = Modifier.padding(vertical = 16.dp))
 
-        // Read-only dropdown displaying the category name
         OutlinedTextField(
             value = categoryName,
-            onValueChange = {}, // No interaction allowed
+            onValueChange = {},
             readOnly = true,
             label = { Text("Category") },
             modifier = Modifier.fillMaxWidth(),
-            enabled = false, // Completely disables interaction
-            trailingIcon = { // Optional: show a locked icon
+            enabled = false,
+            trailingIcon = {
                 Icon(imageVector = Icons.Default.Lock, contentDescription = "Read-only")
             }
         )

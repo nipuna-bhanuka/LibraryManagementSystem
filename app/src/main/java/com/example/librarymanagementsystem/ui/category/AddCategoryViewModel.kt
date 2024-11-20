@@ -21,7 +21,12 @@ class AddCategoryViewModel(private val categoryRepository: CategoryRepository) :
     suspend fun saveCategory() {
         if(validateInput()){
             categoryRepository.insertCategory(categoryUiState.categoryDetails.toCategory())
+            resetForm()
         }
+    }
+
+    private fun resetForm() {
+        categoryUiState = CategoryUiState()
     }
 
     private fun validateInput(uiState: CategoryDetails = categoryUiState.categoryDetails): Boolean {

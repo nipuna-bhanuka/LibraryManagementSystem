@@ -15,8 +15,8 @@ class OfflineBooksRepository(private  val bookDao: BookDao) : BooksRepository{
     override suspend fun insertBook(book: Book)
         = bookDao.insert(book)
 
-    override suspend fun deleteBook(bookId: Int)
-        = bookDao.delete(bookId)
+    override suspend fun deleteBook(book: Book)
+        = bookDao.delete(book)
 
     override suspend fun updateBook(book: Book)
         = bookDao.update(book)

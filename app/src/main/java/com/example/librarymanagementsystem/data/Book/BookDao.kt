@@ -6,7 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.librarymanagementsystem.data.Category.Category
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,7 +17,7 @@ interface BookDao{
     suspend fun update(book: Book)
 
     @Delete
-    suspend fun delete(bookId: Int)
+    suspend fun delete(book: Book)
 
     @Query("SELECT * from books WHERE id = :id")
     fun getBook(id: Int): Flow<Book>

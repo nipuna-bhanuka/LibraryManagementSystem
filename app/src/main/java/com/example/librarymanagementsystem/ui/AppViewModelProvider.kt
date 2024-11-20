@@ -34,7 +34,9 @@ object AppViewModelProvider {
                 libraryApplication().container.booksRepository)
         }
         initializer {
-            BookDetailsViewModel(libraryApplication().container.booksRepository)
+            BookDetailsViewModel(
+                savedStateHandle = this.createSavedStateHandle(),
+                libraryApplication().container.booksRepository)
         }
 
     }
