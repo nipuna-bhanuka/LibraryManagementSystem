@@ -12,6 +12,7 @@ import com.example.librarymanagementsystem.data.Category.Category
             onDelete = ForeignKey.CASCADE
         )],
 )
+
 data class Book(
     @PrimaryKey(autoGenerate = true)
     val id:Int = 1,
